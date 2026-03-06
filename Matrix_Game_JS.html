@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+    body {
+        position: relative;
+        height: 100vh;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        background-color: indianred;
+    }    
+
+    table {
+        background-color: white;
+        border: 1px solid black;
+
+    }
+
+    #score {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        padding: 10px 20px;
+        background-color: beige;
+        border-radius: 40px;
+    }
+
+
+    #timer {
+        position: absolute;
+        top: 10px;
+        left: 43vw;
+        font-size: 18px;
+        font-weight: bold;
+        background-color: beige;
+        border-radius: 40px;
+        padding: 10px 20px;
+    }
+
+
+    #pause-btn {
+        position: absolute;
+        background-color: yellowgreen;
+        padding: 10px 20px;
+        border-radius: 40px;
+        top: 10px;
+        right: 10px;
+    }
+
+    .invisible {
+        background-color:indianred;
+    }
+    </style>
+
+</head>
+<body>
+    <div id="grid" style="border: 1px solid black; height: 420px; width: 420px;"></div>
+
+    <div id="score">Score: 0</div>
+    <div id="timer">Time Left: 60</div>
+    <button id="pause-btn" onclick="togglePause()">Pause</button>
+    
+</body>
+
+
+<script>
+    const grid = document.getElementById('grid');
+    const score = document.getElementById('score');
+    const timer = document.getElementById('timer');
+    const pauseBtn = document.getElementById('pause-btn');
+
+    let count = 0;
+    let size = 2;
+    const maxSize = 7;
+    const containerArea = 420;
+
+    let time;
+    let timeLeft = 60;
+    let isPaused = false;
+
+    function startTimer() {
+        time = setInterval(()=>{
+            timeLeft--;
+            timer.innerHTML = `Time Left: ${timeLeft}`;
+
+            if(timeLeft <= 0) {
+                clearInterval(time);
+                alert(`Game is Over and Your Score is ${count}`)
+                startGame();
+            }
+        }, 1000);
+    }
+
+    function togglePause() {
+        if(isPaused) {
+            pauseBtn.innerHTML = 'Pause';
+            startTimer();
+        }
+        else {
+            pauseBtn.innerHTML=  'Resume';
+            clearInterval(time);
+        }
+        isPaused = !isPaused;
+    }
+
+
+    function buildGrid() {
+
+        if(isPaused) return;
+
+        const total = size*size;
+        const cellSize = (containerArea - (size-1)*6)/size;
+        const targetIndex = Math.floor(Math.random()*total);
+
+        function basicColor() {
+            const hue = Math.floor(Math.random()*200);
+            return `hsl(${hue}, 70%, 40%)`;
+        }
+
+
+        function lightenColor(color) {
+            return color.replace('70%', '40%');
+        }
+
+        const baseColor = basicColor();
+        const lightColor = lightenColor(baseColor);
+
+
+        
+
+        const table = document.createElement('table');
+        table.style.width = '100%';
+        table.style.height = '100%';
+
+
+        for(let i=0; i<size; i++) {
+            const row = table.insertRow();
+
+            for(let j=0; j<size; j++) {
+                const cell = row.insertCell();
+                cell.style.width = `${cellSize}px`;
+                cell.style.height = `${cellSize}px`;
+                
+                if(i == j) cell.classList.add('invisible');
+
+                const cellIndex = i*size + j;
+
+                if(cellIndex === targetIndex) {
+                    cell.dataset.correct = 'true';
+                    cell.style.backgroundColor = lightColor;
+                }
+                else {
+                    cell.dataset.correct = 'false';
+                    cell.style.backgroundColor = baseColor;
+                }
+
+
+                cell.addEventListener("click", ()=>{
+                    if(cell.dataset.correct === 'true') {
+                        if(isPaused) return;
+                        size++;
+                        count++;
+                        score.innerHTML = `Score: ${count}`;
+                        buildGrid();
+                    }
+                })
+            }
+        }
+        grid.innerHTML = '';
+        grid.appendChild(table);
+    }
+
+    function startGame() {
+        size = 2;
+        count = 0;
+        timeLeft = 60;
+
+        score.innerHTML = `Score: 0`;
+        timer.innerHTML = `Time Left: 60`;
+        buildGrid();
+        startTimer();
+    }
+    startGame()
+</script>
+</html>

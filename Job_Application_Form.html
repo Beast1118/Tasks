@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        h1 {
+            display: grid;
+            justify-content: center;
+        }
+
+        .basic-detail {
+            display: flex;
+            gap: 100px;
+        }
+
+        .education-detail {
+            display: flex;
+            gap: 100px;
+            padding: 10px;
+        }
+
+        .education-detail-button {
+            display: flex;
+            gap:10px;
+        }
+
+        .work-experience {
+            display: flex;
+            gap:100px;
+            padding: 10px;
+        }
+
+        .work-experience-button {
+            display: flex;
+            gap:10px;
+            padding-top: 12px;
+        }
+
+        .language-known {
+            display: flex;
+            gap: 50px;
+        }
+
+        .language-known-button {
+            display: flex;
+            gap:10px;
+            padding-top:12px;
+        }
+
+        .technology-known {
+            display: flex;
+            gap:50px;
+        }
+
+        .technology-known-button {
+            display: flex;
+            gap: 10px;
+            padding-top:12px;
+        }
+
+        .reference-contact {
+            display: flex;
+            gap: 100px;
+        }
+
+        .preference {
+            display: flex;
+            gap:100px;
+        }
+
+        .preference-vertical {
+            display: flex;
+            flex-direction: column;
+            gap:15px;
+        }
+
+        #education-detail-add, #education-detail-delete {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        #work-experience-add, #work-experience-delete {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        #language-add {
+            font-size: 15px;
+            font-weight: bold;
+
+        }
+
+        #technology-add {
+            font-style: 15px;
+            font-weight: bold;
+        }
+
+        #submit{
+            display: flex;
+            justify-content: center;
+        }
+        </style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/validator@13.9.0/validator.min.js"></script>
+
+
+</head>
+<body>
+    <h1>Job Application Form</h1>
+
+    <form id="myForm" method="POST">
+        <fieldset>
+            <legend>Basic Detail</legend>
+            <div class="basic-detail">
+                <div>
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" name="fname" placeholder="Enter Your First Name">
+                </div>
+                
+                <div>
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" name="lname" placeholder="Enter Your Last Name">
+                </div>
+                
+                <div>
+                    <label for="designation-basic-detail">Designation</label>
+                    <input type="text" id="designation-basic-detail" name="designation-basic-detail" placeholder="Enter your designation-basic-detail here">
+                </div>
+            </div>
+            <br>
+
+            <div class="basic-detail">
+                <div>
+                    <label for="mobile">Phone Number</label>
+                    <input type="text" id="mobile" name="mobile" placeholder="Enter your phone number">
+                </div>
+
+                <div>
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" placeholder="enter your email here">
+                </div>
+            </div>
+            <br>
+
+            <div class="basic-detail">
+                <div>
+                    <label for="address1">Address1</label>
+                    <input type="text" id="address1" name="address1" placeholder="Enter Your Address1 here">
+                </div>
+                
+                <div>    
+                    <label for="address2">Address2</label>
+                    <input type="text" id="address2" name="address2" placeholder="Enter your address2 here">
+                </div>
+            </div>
+            <br>
+
+
+            <div class="basic-detail">
+                <div>
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" placeholder="Enter your city here">
+                </div>
+
+                <div>
+                    <label for="state">state</label>
+                    <select id="state" name="state">
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Jammu & Kashmir">Jammu & Kashmir</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Kerela">Kerela</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="zipcode">Zip Code</label>
+                    <input type="text" id="zipcode" name="zipcode" maxlength=6 placeholder="Enter your ZipCode here">
+                </div>
+            </div>
+            <br>
+
+            <div class="basic-detail">
+                <div>
+                    Gender &nbsp
+                    <label for="male">Male</label>
+                    <input type="radio" id="male" name="gender" value="male">
+
+                    <label for="female">Female</label>
+                    <input type="radio" id="female" name="gender" value="female">
+                </div>
+
+                <div>
+                    <label for="relationship">RelationShip Status</label>
+                    <select id="relationship" name="relationship">
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="bday">Date Of Birth</label>
+                    <input type="date" id="bday" name="bday">
+                </div>
+            </div>
+        </fieldset>
+        <br>
+        
+
+        <fieldSet>
+            <legend>Education Detail</legend>
+            <div id="education-container">
+                <div class="education-detail">
+                    <div>
+                        <label for="course0">Name of Board/Couse</label>
+                        <input type="text" id="course0" name="course[]" placeholder="Enter Your Course Here">
+                    </div> 
+                    
+                    <div>
+                        <label for="passing-year0">Passing Year</label>
+                        <input type="text" id="passing-year0" name="passing-year[]" placeholder="Enter Your Passing Year" maxlength=4>
+                    </div>
+                    
+                    <div>
+                        <label for="percentage0">Percentage</label>
+                        <input type="text" id="percentage0" name="percentage[]" placeholder="Enter Your Percentage here">
+                    </div>
+                </div>
+            </div>
+            <br>
+                
+                
+            <div class="education-detail-button">
+                <div>
+                    <input type="button" onclick="educationAdd()" id="education-detail-add" name="education-detail-add" value="+ Add">
+                </div>
+                
+                <div>
+                    <input type="button" onclick="educationDelete()" id="education-detail-delete" name="eduation-detail-delete" value="- Delete">
+                </div>
+            </div>
+        </fieldSet>
+        <br>
+
+        <fieldset>
+            <legend>Work Experience</legend>
+            <div id="work-experience-container">
+                <div class="work-experience">
+                    <div>
+                        <label for="company-name0">Company Name</label>
+                        <input type="text" id="company-name0" name="company-name[]" placeholder="Enter Your Company Name">
+                    </div>
+                    
+                    <div>
+                        <label for="from-date0">From</label>
+                        <input type="date" id="from-date0" name="from-date[]">
+                    </div>
+                    
+                    <div>
+                        <label for="to-date0">To</label>
+                        <input type="date" id="to-date0" name="to-date[]">
+                    </div>
+
+                    <div>
+                        <label for="annual-package0">Annual Package</label>
+                        <input type="text" id="annual-package0" name="annual-package[]" placeholder="Enter Your Annual Package Here">
+                    </div>
+                </div>
+                <br>
+
+                <div class="work-experience">
+                    <div>
+                        <label for="reason-to-leave0">Reason To Leave</label>
+                        <input type="text" id="reason-to-leave0" name="reason-to-leave[]" placeholder="Enter Your Reason To Leave">
+                    </div>
+                    
+                    <div>
+                        <label for="professional-reference-contact-number0">Ref. Contact Number</label>
+                        <input type="text" id="professional-reference-contact-number0" name="professional-reference-contact-number[]" placeholder="Enter Your Reference Contact Number">
+                    </div>
+                    
+                    <div>
+                        <label for="professional-reference-contact-name0">Ref. Contact Name</label>
+                        <input type="text" id="professional-reference-contact-name0" name="professional-reference-contact-name[]" placeholder="Enter Your Reference Contact Name">
+                    </div>
+                </div>
+            </div>
+
+            <div class="work-experience-button">
+                <div>
+                    <input type="button" onclick="experienceAdd()" id="work-experience-add" name="work-experience-add" value="+ Add">
+                </div>
+
+                <div>
+                    <input type="button" onclick="experienceDelete()" id="work-experience-delete" name="work-experience-delete" value="- Delete">
+                </div>
+            </div>
+        </fieldset>
+        <br>
+
+        <fieldset>
+            <legend>Language Known</legend>
+
+            <div id="language-known-container">
+                <div class="language-known">
+                    <table id="language-table" name="language-table">
+                        <tr>
+                            <th>Languages</th>
+                            <th>Read</th>
+                            <th>Write</th>
+                            <th>Speak</th>
+                        </tr>
+
+                        <tr>
+                            <td><label for="Hindi">Hindi</label></td>
+                            <td><input type="checkbox" name="Read_Hindi" id="Read_Hindi" value="Hindi"></td>
+                            <td><input type="checkbox" name="Write_Hindi" id="Write_Hindi" value="Hindi"></td>
+                            <td><input type="checkbox" name="Speak_Hindi" id="Speak_Hindi" value="Hindi"></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><label for="English">English</label></td>
+                            <td><input type="checkbox" name="Read_English" id="Read_English" value="English"></td>
+                            <td><input type="checkbox" name="Write_English" id="Write_English" value="English"></td>
+                            <td><input type="checkbox" name="Speak_English" id="Speak_English" value="English"></td>
+                        </tr>
+                        
+                        <tr>
+                            <td><label for="Gujarati">Gujarati</label></td>
+                            <td><input type="checkbox" name="Read_Gujarati" id="Read_Gujarati" value="Gujarati"></td>
+                            <td><input type="checkbox" name="Write_Gujarati" id="Write_Gujarati" value="Gujarati"></td>
+                            <td><input type="checkbox" name="Speak_Gujarati" id="Speak_Gujarati" value="Gujarati"></td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <input type="button" onclick="languageAdd()" id="language-add" name="language-add" value="Add Language">
+            </div>
+        </fieldset>
+        <br>
+
+
+        <fieldset>
+            <legend>Technologies You Know</legend>
+
+
+            <table id="technology-table" name="technology-table">
+                    <tr>
+                        <th>Technology</th>
+                        <th>Beginner</th>
+                        <th>Mediator</th>
+                        <th>Expert</th>
+                    </tr>
+
+                    <tr>
+                        <td><label for="PHP">PHP</label></td>
+                        <td><input type="radio" name="level-of-PHP-known" id="Beginner_PHP"></td>
+                        <td><input type="radio" name="level-of-PHP-known" id="Mediator_PHP"></td>
+                        <td><input type="radio" name="level-of-PHP-known" id="Expert_PHP"></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><label for="MYSQL">MYSQL</label></td>
+                        <td><input type="radio" name="level-of-MYSQL-known" id="Beginner_MYSQL"></td>
+                        <td><input type="radio" name="level-of-MYSQL-known" id="Mediator_MYSQL"></td>
+                        <td><input type="radio" name="level-of-MYSQL-known" id="Expert_MYSQL"></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><label for="Laravel">Laravel</label></td>
+                        <td><input type="radio" name="level-of-Laravel-known" id="Beginner_Laravel"></td>
+                        <td><input type="radio" name="level-of-Laravel-known" id="Mediator_Laravel"></td>
+                        <td><input type="radio" name="level-of-Laravel-known" id="Expert_Laravel"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="Oracle">Oracle</label></td>
+                        <td><input type="radio" name="level-of-Oracle-known" id="Beginner_Oracle"></td>
+                        <td><input type="radio" name="level-of-Oracle-known" id="Mediator_Oracle"></td>
+                        <td><input type="radio" name="level-of-Oracle-known" id="Expert_Oracle"></td>
+                    </tr>
+                </table>
+                <br>
+                <input type="button" onclick="technologyAdd()" id="technology-add" name="technology-add" value="Add Technology">
+        </fieldset> 
+        <br>
+
+
+
+        <fieldSet>
+            <legend>Reference Contact</legend>
+            <div id="reference-contact-container">
+                <div class="reference-contact">
+                    <div>
+                        <label for="personal-reference-person-name0">Name</label>
+                        <input type="text" id="personal-reference-person-name0" name="personal-reference-person-name0" placeholder="Enter Your Reference Persons Name">
+                    </div>
+                    
+                    <div>
+                        <label for="personal-reference-contact-number">Contact Number</label>
+                        <input type="text" id="personal-reference-contact-number0" name="personal-reference-contact-number0" placeholder="Enter Your Reference Persons Contact Number">
+                    </div>
+
+                    <div>
+                        <label for="personal-reference-contact-relation">Relation</label>
+                        <input type="text" id="personal-reference-contact-relation0" name="personal-reference-contact-relation0" placeholder="Enter Your Relation With The Reference Contact Person">
+                    </div>
+                </div>
+                <br>
+
+                <div class="reference-contact">
+                    <div>
+                        <label for="personal-reference-person-name1">Name</label>
+                        <input type="text" id="personal-reference-person-name1" name="personal-reference-person-name1" placeholder="Enter Your Reference Persons Name">
+                    </div>
+                    
+                    <div>
+                        <label for="personal-reference-contact-number">Contact Number</label>
+                        <input type="text" id="personal-reference-contact-number1" name="personal-reference-contact-number1" placeholder="Enter Your Reference Persons Contact Number">
+                    </div>
+
+                    <div>
+                        <label for="personal-reference-contact-relation1">Relation</label>
+                        <input type="text" id="personal-reference-contact-relation1" name="personal-reference-contact-relation1" placeholder="Enter Your Relation With The Reference Contact Person">
+                    </div>
+                </div>
+            </div>
+        </fieldSet>
+        <br>
+
+        <fieldset>
+            <legend>Preferences</legend>
+
+            <div id="preferences-container">
+                <div class="preference">
+                    <div>
+                        <label for="prefered-location">Prefered Location</label>
+                        <select id="prefered-location" name="prefered-location">
+                            <option value="Vadodara">Vadodara</option>
+                            <option value="Ahmedabad">Adhmedabad</option>
+                            <option value="Surat">Surat</option>
+                            <option value="Ankleshwar">Ankleshwar</option>
+                            <option value="Rajkot">Rajkot</option>
+                            <option value="Bharuch">Bharuch</option>
+                        </select>
+                    </div>
+
+                    <div class="preference-vertical">
+                        <div>
+                            <label for="notice-period">Notice Period</label>
+                            <input type="text" id="notice-period" name="notice-period" placeholder="Enter Your Notice Period Here">
+                        </div>
+                        
+                        <div>
+                            <label for="expected-ctc">Ecpected CTC</label>
+                            <input type="text" id="expected-ctc" name="expected-ctc" placeholder="Enter Your Expected CTC Here">
+                        </div>
+                        
+                        <div>
+                            <label for="current-ctc">Current CTC</label>
+                            <input type="text" id="current-ctc" name="current-ctc" placeholder="Enter Your Current CTC Here">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="department">Department</label>
+                        <select id="department" name="department">
+                            <option value="Development">Development</option>
+                            <option value="Design">Design</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Qulaity Analyst">Quality Analyst</option>
+                            <option value="Business Analyst">Business Analyst</option>
+                            <option value="Finance">Finance</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <br>
+
+        <div id="submit">
+            <input type="submit" value="Submit" id="submitBtn">
+        </div>
+    </form>
+
+        
+        
+
+
+    <script>
+        let education_count = 0;
+        let work_experience_count = 0;
+
+        function educationAdd() {
+            education_count++;
+            document.getElementById("education-container").innerHTML += `
+            <div class="education-detail">
+                <div>
+                    <label for="course${education_count}">Name of Board/course</label>
+                    <input type="text" id="course${education_count}" name="course[]" placeholder="Enter your Course Here">
+                </div>
+
+                <div>
+                    <label for="passing-year${education_count}">Passing Year</label>
+                    <input type="text" id="passing-year${education_count}" name="passing-year[]" placeholder="Enter Your Passing Year" maxlength=4>
+                </div>
+
+                <div>
+                    <label for="percentage${education_count}">Percentage</label>
+                    <input type="text" id="percentage${education_count}" name="percentage[]" placeholder="Enter Your Percentage Here">
+                </div>
+            </div>`
+        }
+
+
+        function educationDelete() {
+            const container = document.getElementById('education-container');
+            const rows = document.getElementsByClassName('education-detail');
+
+            if(rows.length > 1) {
+                container.removeChild(rows[rows.length-1]);
+                education_count--;
+            }
+            else {
+                alert("You Cant Delete the Default Fields")
+            }
+        }
+
+        function experienceAdd() {
+            work_experience_count++;
+
+            document.getElementById('work-experience-container').innerHTML += `<br>
+            <div class="work-experience">
+                <div>
+                    <label for="company-name${work_experience_count}">Company Name</label>
+                    <input type="text" id="company-name${work_experience_count}" name="company-name[]" placeholder="Enter Your Company Name">
+                </div>
+
+                <div>
+                    <label for="from-date${work_experience_count}">From</label>
+                    <input type="date" id="from-date${work_experience_count}" name="from-date[]">
+                </div>
+
+                <div>
+                    <label for="to-date${work_experience_count}">To</label>
+                    <input type="date" id="to-date${work_experience_count}" name="to-date[]">
+                </div>
+
+                <div>
+                    <label for="annual-package${work_experience_count}">Annual Package</label>
+                    <input type="text" id="annual-package${work_experience_count}" name="annual-package[]" placeholder="Enter Your Annual Package Here">
+                </div>
+            </div>
+
+            <div class="work-experience">
+                <div>
+                    <label for="reason-to-leave${work_experience_count}">Reason To Leave</label>
+                    <input type="text" id="reason-to-leave${work_experience_count}" name-"reason-to-leave[]" placeholder="Enter Your Reason To Leave">
+                </div>
+
+                <div>
+                    <label for="professional-reference-contact-number${work_experience_count}">Ref. Contact Number</label>
+                    <input type="text" id="professional-reference-contact-number${work_experience_count}" name="professional-reference-contact-number[]" placeholder="Enter Your Reference Contact Number">
+                </div>
+
+                <div>
+                    <label for="professional-reference-contact-name${work_experience_count}">Ref. Contact Name</label>
+                    <input type="text" id="professional-reference-contact-name${work_experience_count}" name="professional-reference-contact-name[]" placeholder="Enter Your Reference Contact Name">
+                </div>
+            `
+        }
+
+
+        function experienceDelete() {
+            const container = document.getElementById('work-experience-container');
+            const rows = document.getElementsByClassName('work-experience');
+
+            if(rows.length > 2) {
+                container.removeChild(rows[rows.length-1]);
+                container.removeChild(rows[rows.length-1]);
+                work_experience_count--;
+            }
+            else {
+                alert("You Cant Delete Default Fields");
+            }
+        }
+
+
+        function languageAdd() {
+            const language = prompt('Enter the Language You want to add');
+            
+            const container = document.getElementById('language-table');
+            
+            container.innerHTML += `
+                <tr>
+                    <td><label for="Read_${language}">${language}</label></td>
+                    <td><input type="checkbox" name="Read_${language}" id="Read_${language}" value="${language}"></td>
+                    <td><input type="checkbox" name="Write_${language}" id="Write_${language}" value="${language}"></td>
+                    <td><input type="checkbox" name="Speak_${language}" id="Speak_${language}" value="${language}"></td>
+                </tr>
+            `;
+        }
+
+
+        function technologyAdd() {
+            const technology = prompt('Enter the Technology You want to add');
+
+            const container = document.getElementById('technology-table');
+            
+            container.innerHTML += `
+                <tr>
+                    <td><label for="${technology}">${technology}</label></td>
+                    <td><input type="radio" name="level-of-${technology}-known" id="Beginner_${technology}"></td>
+                    <td><input type="radio" name="level-of-${technology}-known" id="Mediator_${technology}"></td>
+                    <td><input type="radio" name="level-of-${technology}-known" id="Expert_${technology}"></td>
+                </tr>
+            `;
+        }
+
+
+
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+
+            // Regex Patterns
+            const namePattern = /^[A-Za-z]{2,30}$/;
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+            const phonePattern = /^[0-9]{10}$/;
+            const zipcodePattern = /^[0-9]{5,6}$/;
+            const yearPattern = /^[0-9]{4}$/;
+            const percentagePattern = /^(100(\.0{1,2})?|[0-9]{1,2}(\.[0-9]{1,2})?)$/; // 0-100
+            const ctcPattern = /^[0-9]+(\.[0-9]{1,2})?$/; // numeric
+            const noticePattern = /^[0-9]+$/; // integer
+
+
+
+            function isInvalidField(message, field) {
+                alert(message);
+                document.getElementById(field).focus();
+                return false;
+            }
+
+
+
+
+            // Basic Details
+            if(!namePattern.test(document.getElementById('fname').value.trim())) {
+                isInvalidField("Invalid First Name", 'fname');
+            }
+            if(!namePattern.test(document.getElementById('lname').value.trim())) {
+                isInvalidField("Invalid Last Name", 'lname');
+            }
+            if(!namePattern.test(document.getElementById('designation-basic-detail').value.trim())) {
+                isInvalidField('Invalid Designation', 'designation-basic-detail');
+            }
+            if(!phonePattern.test(document.getElementById('mobile').value.trim())) {
+                isInvalidField('Invalid Phone Number', 'mobile');   
+            }
+            if(!emailPattern.test(document.getElementById('email').value.trim()))  {
+                isInvalidField('Invalid Email', 'email');
+            }
+            if(document.getElementById('address1').value.trim() === '') {
+                return isInvalidField('Address1 cannot be Empty', 'address1');
+            }
+            if(document.getElementById('address2').value.trim() === '') {
+                return isInvalidField('Address2 Cannot Be Empty', 'address2');
+            }
+            if(document.getElementById('city').value.trim() === '') {
+                return isInvalidField('City Cannot Be Empty', 'city');
+            }
+            if(!document.getElementById('state').value) {
+                return isInvalidField('Please Select State', 'state');
+            }
+            if(!zipcodePattern.test(document.getElementById('zipcode').value.trim())) {
+                return isInvalidField('Invalid Zip Code', 'zipcode');
+            }
+            if(!document.querySelector('input[name="gender"]:checked')) {
+                return alert("Please Select Gender");
+            }
+            if(!document.getElementById('relationship').value) {
+                return isInvalidField("Please Select RelationShip Status", 'relationship')
+            }
+            if(!document.getElementById('bday').value) {
+                return isInvalidField('Please Enter Your Date Of Birth', 'bday');
+            }
+
+
+
+
+            // Education Detatils
+            // Education Details
+            const educationCourse = document.querySelectorAll('input[name="course[]"]');
+            const educationYears = document.querySelectorAll('input[name="passing-year[]"]');
+            const educationPercentage = document.querySelectorAll('input[name="percentage[]"]');
+
+            for (let i = 0; i < educationCourse.length; i++) {
+                // Validate if the course field is empty
+                if (educationCourse[i].value.trim() === '') {
+                    return alert(`Education Course/Board at Row ${i + 1} cannot be empty`);
+                }
+
+                // Validate the passing year field
+                if (!yearPattern.test(educationYears[i].value.trim())) {
+                    return alert(`Invalid Passing Year at Row ${i + 1}`);
+                }
+
+                // Validate the percentage field
+                if (!percentagePattern.test(educationPercentage[i].value.trim())) {
+                    return alert(`Invalid Percentage at Row ${i + 1}`);
+                }
+            }
+
+
+
+            // Work Experience Details
+            const companies = document.querySelectorAll('input[name="company-name[]"]');
+            const fromDates = document.querySelectorAll('input[name="from-date[]"]');
+            const toDates = document.querySelectorAll('input[name="to-date[]"]');
+            const annualPackages = document.querySelectorAll('input[name="annual-package[]"]');
+            const reasons = document.querySelectorAll('input[name="reason-to-leave[]"]');
+            const profRefNumbers = document.querySelectorAll('input[name="professional-reference-contact-number[]"]');
+            const profRefNames = document.querySelectorAll('input[name="professional-reference-contact-name[]"]');
+
+            // Loop through each dynamically added work experience row
+            for (let i = 0; i < companies.length; i++) {
+                // Validate the company name
+                if (companies[i].value.trim() === '') {
+                    return alert(`Company Name at Row ${i + 1} cannot be empty`);
+                }
+
+                // Validate the dates
+                if (!fromDates[i].value || !toDates[i].value) {
+                    return alert(`From/To Dates at Row ${i + 1} cannot be empty`);
+                }
+
+                // Validate the annual package
+                if (!ctcPattern.test(annualPackages[i].value.trim())) {
+                    return alert(`Invalid Annual Package at Row ${i + 1}`);
+                }
+
+                // Validate the reason to leave
+                if (reasons[i].value.trim() === '') {
+                    return alert(`Reason to Leave at Row ${i + 1} cannot be empty`);
+                }
+
+                // Validate the professional reference contact number
+                if (!phonePattern.test(profRefNumbers[i].value.trim())) {
+                    return alert(`Invalid Professional Reference Contact Number at Row ${i + 1}`);
+                }
+
+                // Validate the professional reference contact name
+                if (!namePattern.test(profRefNames[i].value.trim())) {
+                    return alert(`Invalid Professional Reference Contact Name at Row ${i + 1}`);
+                }
+            }
+
+
+            // Language Known
+            let count_Hindi = 0;
+            let count_English = 0;
+            let count_Gujarati = 0;
+
+            let Hindi_Check_Boxes = ['Hindi', 'Read_Hindi', 'Write_Hindi', 'Speak_Hindi'];
+            let English_Check_Boxes = ['English', 'Read_English', 'Write_English', 'Speak_English'];
+            let Gujarati_Check_Boxes = ['Gujarati', 'Read_Gujarati', 'Write_Gujarati', 'Speak_Gujarati'];
+
+            Hindi_Check_Boxes.forEach(id =>{
+                if(document.getElementById(id).checked) {
+                count_Hindi++;
+                }
+            })
+
+            English_Check_Boxes.forEach(id =>{
+                if(document.getElementById(id).checked) {
+                    count_English++;
+                }
+            })
+
+            Gujarati_Check_Boxes.forEach(id=>{
+                if(document.getElementById(id).checked) {
+                    count_Gujarati++;
+                }
+            })
+
+            if(count_Hindi >= 2 || count_English >= 2 || count_Gujarati >= 2) {
+
+            }
+            else {
+                return alert("Inappropriate Options Selected in Language Known Section");
+            }
+
+
+
+
+
+
+
+            // Technology Known
+            
+            let technology_known = ['PHP', 'Laravel', 'MYSQL', 'Oracle'];
+            let technology_count = 0;
+
+            technology_known.forEach(id => {
+                console.log(`Checking technology: ${id}`);
+                
+                // Check if the technology checkbox is checked
+                if (document.getElementById(id).checked) {
+                    technology_count++;
+
+                    // Check if any radio button for the technology is selected
+                    const selectedRadioButton = document.querySelector(`input[name="level-of-${id}-known"]:checked`);
+                    console.log(`Radio buttons for ${id}:`, selectedRadioButton);
+
+                    // If no radio button is selected, show an alert
+                    if (!selectedRadioButton) {
+                        alert(`Please Select the Correct radio button for ${id}`);
+                    }
+                }
+            });
+
+        console.log(`Technology count: ${technology_count}`);
+        if (technology_count < 2) {
+            alert("Please select at least 2 technologies that you know.");
+        }
+
+
+
+
+
+            // Reference Contacts
+
+            for(i=0; i<2; i++) {
+                if(!namePattern.test(document.getElementById(`personal-reference-person-name${i}`).value.trim())) {
+                    return isInvalidField(`Please Enter Personal Reference Person Name ${i+1}`, `personal-reference-person-name${i}`)
+                }
+                if(!phonePattern.test(document.getElementById(`personal-reference-contact-number${i}`).value.trim())) {
+                    return isInvalidField(`Please Enter Personal Reference Person Contact Number ${i+1}`, `personal-reference-contact-number${i}`);
+                }
+                if(!namePattern.test(document.getElementById(`personal-reference-contact-relation${i}`).value.trim())) {
+                    return isInvalidField(`Please Enter the Personal Reference Contact Relation ${i+1}`, `personal-reference-contact-relation${i}`);
+                }
+            }
+
+
+
+
+            //Preferences
+
+            if(!document.getElementById('prefered-location').value) {
+                return isInvalidField('Please Select Your Prefered Location', 'prefered-location');
+            }
+            if(!noticePattern.test(document.getElementById('notice-period').value.trim())) {
+                return isInvalidField("Invalid Notice Period", 'notice-period');
+            }
+            if(!ctcPattern.test(document.getElementById('expected-ctc').value.trim())) {
+                return isInvalidField('Invalid Expected CTC', 'expected-ctc');
+            }
+            if(!ctcPattern.test(document.getElementById('current-ctc').value.trim())) {
+                return isInvalidField('Invalid Current CTC', 'current-ctc');
+            }
+            if(!document.getElementById('department').value) {
+                return isInvalidField('Please Select Your Department', 'department');
+            }
+        }) 
+
+
+    </script>
+</body>
+</html>

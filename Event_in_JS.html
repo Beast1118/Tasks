@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        body {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        table {
+            position: absolute;
+            border: 5px solid black;
+            height: 750px;
+            width: 750px;
+        }
+        
+        td {
+            border: 3px solid black;
+            height: 100px;
+            width: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table id='table-container'>
+        <tr>
+            <td id="td1"><b>click</b></td>
+            <td id="td2"><b>dblclick</b></td>
+            <td id="td3"><b>mousedown & 
+                mouseup</b>
+            </td>
+            <td id="td4"><b>mousemove</b></td>
+            <td id="td5"><b>mouseover & mouseout</b></td>
+        </tr>
+
+        <tr>
+            <td id="td6" tabindex="2"><b>contextmenu</b></td>
+            <td id="td7" tabindex="1"><b>wheel</b></td>
+            <td id="td8" tabindex="0"><b>keydown & keyup</b></td>
+            <td id="td9"><b>DOMContentLoaded</b></td>
+            <td id="td10"><b>Window Load</b></td>
+        </tr>
+
+        <tr>
+            <td id="td11"><b>setInterval
+                <button id="btnStartTimer">Start Timer</button>
+            </b></td>
+            <td id="td12"><b>setTimeOut</b>
+            <button id="btnSetTimeOut">Start</button></td>
+            <td id="td13"><b>clearInterval</b>
+            <button id="btnStopTimer">Stop Timer</button></td>
+            <td id="td14"><b>clearTimeOut</b>
+            <button id="btnStopTimeOut">Stop Timers</button></td>
+            <td id="td15"><b>OnInput</b>
+            <input type="text" name="text" id="text" oninput="myFunction()"></td>
+        </tr>
+    </table>
+
+
+
+    <script>
+        document.getElementById('td1').addEventListener('click', function() {
+            document.getElementById('td1').style.backgroundColor = 'red';
+        })
+
+
+        document.getElementById('td2').addEventListener('dblclick', function() {
+            document.getElementById('td2').style.backgroundColor = 'blue';
+            document.getElementById('td2').style.color = 'white';
+        })
+
+        document.getElementById('td3').addEventListener('mousedown', function() {
+            document.getElementById('td3').style.visibility = 'hidden';
+        })
+
+        document.getElementById('td4').addEventListener('mousemove', function(e) {
+            const mouseX = e.clientX; // Mouse X position
+            const mouseY = e.clientY; // Mouse Y position
+
+            console.log(mouseX + " " + mouseY);  // Log mouse position for debugging
+
+            // Map the values to ensure they stay within the 0-255 range for RGB
+            const red = Math.min(255, Math.max(0, mouseX - 700)); // MouseX range adjusted for RGB (0-255)
+            const green = Math.min(255, Math.max(0, mouseY - 220)); // MouseY range adjusted for RGB (0-255)
+            const blue = Math.min(255, Math.max(0, ((mouseX + mouseY) / 2) - 300)); // Combined X and Y for blue
+
+            // Apply the calculated RGB values to the background color of td4
+            document.getElementById('td4').style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+        });
+
+        document.getElementById('td5').addEventListener('mouseover', function() {
+            document.getElementById('td5').innerHTML = "You are On MouseOver and MouseOut Event Cell";
+        })
+
+        document.getElementById('td5').addEventListener('mouseout', function() {
+            document.getElementById('td5').innerHTML = 'mouseover & mouseout ';
+        })
+
+        document.getElementById('td6').addEventListener('contextmenu', function() {
+            alert("You Cant Open Context Menu Here");
+        })
+
+        document.getElementById('td7').addEventListener('wheel', function(e) {
+            console.log(e.deltaY);
+            if(e.deltaY > 0) {
+                document.getElementById('td7').style.backgroundColor = 'lightblue';
+            }
+            else {
+                document.getElementById('td7').style.backgroundColor = 'lightgreen'
+            }
+        })
+
+        document.getElementById('td8').addEventListener('keydown', function(e) {
+            console.log(e.key);
+            document.getElementById('td8').innerHTML = "You Pressed: "+e.key
+        })
+
+        document.getElementById('td8').addEventListener('keyup', function(e) {
+            console.log(e.key);
+            document.getElementById('td8').innerHTML = "<b>keydown & keyup</b>"
+        })
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Content Loaded Successfully");
+            document.getElementById('td9').innerHTML += " <b>Successfully</b>";
+        })
+
+        window.addEventListener('load', function() {
+            console.log("Window Loaded Successfullly");
+            document.getElementById('td10').innerHTML += " <b>Successfully</b>";
+        })
+
+        let timer;
+        let time = 0;
+        document.getElementById('btnStartTimer').addEventListener('click', function() {
+            timer = setInterval(()=>{
+                time++;
+                document.getElementById('btnStartTimer').innerHTML = `<b>Counter: ${time}</b>`;
+            }, 1000);
+        }) 
+
+        document.getElementById('btnStopTimer').addEventListener('click', function(){
+            clearInterval(timer);
+            timer = time;
+            document.getElementById('btnStartTimer').innerHTML = "Start Timer"
+        })
+
+        let timeout_timer;
+        document.getElementById('btnSetTimeOut').addEventListener('click', function(){
+            timeout_timer = setTimeout(()=>{
+                document.getElementById('td12').style.backgroundColor = 'cyan'
+            }, 2000);
+        })
+
+
+        document.getElementById('btnStopTimeOut').addEventListener('click', function() {
+            clearTimeout(timeout_timer);
+        });
+
+        document.getElementById('td15').addEventListener('dragStart', function(e) {
+            e.target.style.color = 'red';
+        })
+
+        function myFunction() {
+            document.getElementById('td15').style.backgroundColor='yellowgreen';
+        }
+    </script>
+</body>
+</html>

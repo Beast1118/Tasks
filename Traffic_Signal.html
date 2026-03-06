@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            height: 100vh;
+            position: relative;
+            top: -9vh;
+            left: 7vw;
+            border-collapse: collapse;
+            background-image: url('https://media.istockphoto.com/id/1343509578/vector/crossroad.jpg?s=612x612&w=0&k=20&c=o-rURbW-pnBRbx4DUsleqptZSyLPIXF-gmkgf-TKPFI=');
+            background-repeat: no-repeat;
+            background-size: 70% 80%;
+            margin-bottom: 100px;
+        }
+
+        td {
+            border: 2px solid black;
+        }
+
+        table {
+            bottom: 50px;
+        }
+
+        #north-timer, #east-timer, #south-timer, #west-timer {
+            position: absolute;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #north-timer {
+            top: 20vh;
+            left:-3vw;
+        }
+
+        #east-timer {
+            top: 20vh;
+            right: 43vw;
+        }
+
+        #west-timer {
+            bottom: 15vh;
+            left: -3vw;
+        }
+
+        #south-timer {
+            bottom: 15vh;
+            right: 43vw;
+        }
+
+        .green {
+            background-color: green;
+            border-radius: 50%;
+        }
+
+        .yellow {
+            background-color: yellow;
+            border-radius: 50%;
+        }
+
+        .red {
+            background-color: red;
+            border-radius: 50%;
+        }
+
+        .invisible {
+            border: none;
+            border-radius: 50%;
+        }
+
+        .blank {
+            /* background-color: black; */
+            visibility: 0;
+            opacity: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="grid">
+        <div id="east-timer">Timer East: 20</div>
+        <div id="west-timer">Timer West: 20</div>
+        <div id="north-timer">Timer North: 20</div>
+        <div id="south-timer">Timer South: 20</div>
+    </div>
+
+    <script>
+        const grid = document.getElementById('grid');
+        const table = document.createElement('table');
+        const containerArea = 750;
+
+        const northTimer = document.getElementById('north-timer');
+        const eastTimer = document.getElementById('east-timer');
+        const westTimer = document.getElementById('west-timer');
+        const southTimer = document.getElementById('south-timer');
+
+        // let currentDirection = 'north';
+
+        // Create traffic grid
+        function createTrafficGrid() {
+            for (let i = 0; i < 3; i++) {
+                const row = table.insertRow();
+                for (let j = 0; j < 3; j++) {
+                    const cell = row.insertCell();
+                    cell.style.width = `${containerArea / 3}px`;
+                    cell.style.height = `${containerArea / 3}px`;
+
+                    const innerTable = document.createElement('table');
+                    for (let x = 0; x < 3; x++) {
+                        const innerRow = innerTable.insertRow();
+                        for (let y = 0; y < 3; y++) {
+                            const innerCell = innerRow.insertCell();
+                            innerCell.style.width = `${containerArea / 9}px`;
+                            innerCell.style.height = `${containerArea / 9}px`;
+
+                            if (i === 0 && j === 1) {
+                                if (x === 2 && y === 0) {
+                                    innerCell.classList.add('green');
+                                    innerCell.dataset.direction = 'north';
+                                } else if (x === 2 && y === 1) {
+                                    innerCell.classList.add('yellow');
+                                    innerCell.dataset.direction = 'north';
+                                } else if (x === 2 && y === 2) {
+                                    innerCell.classList.add('red');
+                                    innerCell.dataset.direction = 'north';
+                                }
+                                else {
+                                    innerCell.classList.add('invisible');
+                                }
+                            } 
+                            else if (i === 1 && j === 0) {
+                                if (x === 0 && y === 2) {
+                                    innerCell.classList.add('red');
+                                    innerCell.dataset.direction = 'west';
+                                } else if (x === 1 && y === 2) {
+                                    innerCell.classList.add('yellow');
+                                    innerCell.dataset.direction = 'west';
+                                } else if (x === 2 && y === 2) {
+                                    innerCell.classList.add('green');
+                                    innerCell.dataset.direction = 'west';
+                                }
+                                else {
+                                    innerCell.classList.add('invisible');
+                                }
+                            } 
+                            else if (i === 1 && j === 2) {
+                                if (x === 0 && y === 0) {
+                                    innerCell.classList.add('green');
+                                    innerCell.dataset.direction = 'east';
+                                } else if (x === 1 && y === 0) {
+                                    innerCell.classList.add('yellow');
+                                    innerCell.dataset.direction = 'east';
+                                } else if (x === 2 && y === 0) {
+                                    innerCell.classList.add('red');
+                                    innerCell.dataset.direction = 'east';
+                                }
+                                else {
+                                    innerCell.classList.add('invisible');
+                                }
+                            } 
+                            else if (i === 2 && j === 1) {
+                                if (x === 0 && y === 2) {
+                                    innerCell.classList.add('green');
+                                    innerCell.dataset.direction = 'south';
+                                } else if (x === 0 && y === 1) {
+                                    innerCell.classList.add('yellow');
+                                    innerCell.dataset.direction = 'south';
+                                } else if (x === 0 && y === 0) {
+                                    innerCell.classList.add('red');
+                                    innerCell.dataset.direction = 'south';
+                                }
+                                else {
+                                    innerCell.classList.add('invisible');
+                                }
+                            }
+                        }
+                        if((i == 0 && j == 1) || (i == 1 && j == 0) || (i == 1 && j == 2) || ( i == 2 && j == 1)) {
+                            cell.appendChild(innerTable);
+                        }
+                        cell.classList.add('invisible');
+                    }
+                }
+            }
+        }
+        grid.appendChild(table);
+
+
+        
+        let north_timer=20, east_timer = 40, south_timer = 60, west_timer = 80;
+        let timer;
+
+        function startNorthTimer() {
+            let north_cells = document.querySelectorAll('[data-direction = north]');
+            let east_cells = document.querySelectorAll('[data-direction = east]');
+            let south_cells = document.querySelectorAll('[data-direction = south]');
+            let west_cells = document.querySelectorAll('[data-direction = west]');
+
+            timer = setInterval(()=>{
+            if(north_timer > 0 && north_timer <= 20) {
+                    north_timer--;
+                    east_timer--;
+                    south_timer--;
+                    west_timer--;
+                    northTimer.innerHTML = `Timer North: ${north_timer}`;
+                    eastTimer.innerHTML = `Timer East: ${east_timer}`;
+                    southTimer.innerHTML = `Timer South: ${south_timer}`;
+                    westTimer.innerHTML = `Timer West: ${west_timer}`;
+                }
+                else {
+                    north_timer = 80;
+                    clearInterval(timer);
+                    startEastTimer();
+                }
+                updateLights(north_timer, 'north');
+            },1000);
+        }
+
+
+
+        function startEastTimer() {
+            timer = setInterval(()=>{
+                if(east_timer > 0 && east_timer <= 20) {
+                    north_timer--;
+                    east_timer--;
+                    south_timer--;
+                    west_timer--;
+                    northTimer.innerHTML = `Timer North: ${north_timer}`;
+                    eastTimer.innerHTML = `Timer East: ${east_timer}`;
+                    southTimer.innerHTML = `Timer South: ${south_timer}`;
+                    westTimer.innerHTML = `Timer West: ${west_timer}`;
+                }
+                else {
+                    clearInterval(timer);
+                    east_timer = 80;
+                    startSouthTimer();
+                }
+                updateLights(east_timer, 'east');
+            }, 1000);
+        }
+
+
+
+        function startSouthTimer() {
+            timer = setInterval(()=>{
+                if(south_timer > 0 && south_timer <= 20) {
+                    north_timer--;
+                    east_timer--;
+                    south_timer--;
+                    west_timer--;
+                    northTimer.innerHTML = `Timer North: ${north_timer}`;
+                    eastTimer.innerHTML = `Timer East: ${east_timer}`;
+                    southTimer.innerHTML = `Timer South: ${south_timer}`;
+                    westTimer.innerHTML = `Timer West: ${west_timer}`;
+                }
+                else {
+                    clearInterval(timer);
+                    south_timer = 80;
+                    startWestTimer();
+                }
+                updateLights(south_timer, 'south');
+            }, 1000);
+        }
+
+
+
+        function startWestTimer() {
+            timer = setInterval(()=>{
+                if(west_timer > 0 && west_timer <= 20) {
+                    north_timer--;
+                    east_timer--;
+                    south_timer--;
+                    west_timer--;
+                    northTimer.innerHTML = `Timer North: ${north_timer}`;
+                    eastTimer.innerHTML = `Timer East: ${east_timer}`;
+                    southTimer.innerHTML = `Timer South: ${south_timer}`;
+                    westTimer.innerHTML = `Timer West: ${west_timer}`;
+                }
+                else {
+                    clearInterval(timer);
+                    west_timer = 80;
+                    startNorthTimer();
+                }
+                updateLights(west_timer, 'west');
+            },1000);
+        }
+
+
+        const available_directions = ['north', 'east','south', 'west'];
+
+
+        function updateLights(timer, direction) {
+            available_directions.forEach(current_direction =>{
+                const cells = document.querySelectorAll(`[data-direction = '${current_direction}']`);
+                if(timer > 5 && timer <= 20) {
+                    if(current_direction === direction) {
+                        cells.forEach(cell =>{
+                            // cell.classList.add('green');
+                            // cell.classList.remove('red', 'yellow');
+
+                            if(cell.classList.contains('green')) {
+                                cell.classList.remove('blank');
+                            }
+                            else {
+                                cell.classList.add('blank');
+                            }
+                        })
+                    }
+                    else {
+                        cells.forEach(cell => {
+                            // cell.classList.add('red');
+                            // cell.classList.remove('green', 'yellow');
+
+                            if(cell.classList.contains('red')) {
+                                cell.classList.remove('blank');
+                            }
+                            else {
+                                cell.classList.add('blank');
+                            }
+                        })
+                    }
+                }
+                else if(timer > 0 && timer <= 5)
+                {
+                    if(current_direction === direction) {
+                        cells.forEach(cell =>{
+                            // cell.classList.add('yellow');
+                            // cell.classList.remove('red', 'green');
+                            if(cell.classList.contains('yellow')) {
+                                cell.classList.remove('blank');
+                            }
+                            else {
+                                cell.classList.add('blank');
+                            }
+                        })
+                    }
+                }
+                else {
+                    if(current_direction === direcion) {
+                        cells.forEach(cell => {
+                            // cell.classList.add('red');
+                            // cell.classList.remove('green', 'yellow');
+
+                            if(cell.classList.contains('red')) {
+                                cell.classList.remove('blank');
+                            }
+                            else {
+                                cell.classList.add('blank');
+                            }
+                        })
+                    }
+                }
+            })
+        }
+        createTrafficGrid();
+        startNorthTimer();
+    </script>
+</body>
+</html>
