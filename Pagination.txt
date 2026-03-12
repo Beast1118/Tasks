@@ -1,23 +1,35 @@
-Pagination.ejs
+pagination.ejs
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pagination</title>
     <link rel="stylesheet" href="/CSS/pagination.css">
 </head>
 <body>
+    <h1>Students Details</h1>
 
-    <h1>Student Details</h1>
+    <div id="search-bar">
+        <search id="search-display">
+            <div>
+                <label for="search-text">Search Name</label>
+                <input type="text" id='search-text' name="search-text" placeholder="Enter the name you want:">
+            </div>
+            
+            <div>
+                <button onclick="findSimilar()" id="submit-search"> Search</button>
+            </div>
+        </search>
+    </div>
 
-    <p id='value' style="display: none;"> <%= totalPages %> </p>
-    <div>
-        <table id="student-detail-container"> 
+    <p id="demo" style="display: none;"><%= totalPages %></p>
+    <div id="table-container">
+        <table id="student-detail">
             <thead>
                 <tr>
-                    <th onclick="sortColumn('student_id')">Student Id 
+                    <th onclick="sortColumn('student_id')">Student ID
                         <span class="sort-icon">⇅</span>
                     </th>
                     <th onclick="sortColumn('student_name')">Student Name
@@ -35,121 +47,178 @@ Pagination.ejs
                     </th>
                 </tr>
             </thead>
-            
+
             <tbody>
-                
-                <% students.forEach(student =>{ %>
+                <% students.forEach(student => { %>
                     <tr>
-                        <td> <%= student.student_id %> </td>
-                        <td> <%= student.student_name %> </td>
-                        <td> <%= student.student_phoneNumber %> </td>
-                        <td> <%= student.student_email %> </td>
-                        <td> <%= student.student_gender %> </td>
-                        <td> <%= student.student_address %> </td>
-                    <td> <%= student.student_city %> </td>
-                    <td> <%= student.student_dateOfBirth.toISOString().split('T')[0] %> </td>
-                </tr>
+                        <th><%= student.student_id %></th>
+                        <th><%= student.student_name %></th>
+                        <th><%= student.student_phoneNumber %></th>
+                        <th><%= student.student_email %></th>
+                        <th><%= student.student_gender %></th>
+                        <th><%= student.student_address %></th>
+                        <th><%= student.student_city %></th>
+                        <th><%= student.student_dateOfBirth.toISOString().split('T')[0] %></th>
+                    </tr>
                 <% }) %>
             </tbody>
         </table>
     </div>
 
     <div>
-        <nav class="search-result-pages">
+        <nav class="search-result-page">
             <ul class="pagination">
-            <!-- Previous button -->
                 <li class="page-item">
-                    <button class="page-link" id="prevBtn" aria-label="Previous" disabled> &laquo; Previous</button>
+                    <button id="prevBtn" class="page-link">&laquo; Previous</button>
                 </li>
-                
-                
-                <!-- Dynamic Buttons will go here -->
+
                 <div id="pageButtons"></div>
-                
-                <!-- Next button -->
+
                 <li class="page-item">
-                    <button class="page-link" id="nextBtn">Next &raquo;</button>
+                    <button id="nextBtn" class="page-link">Next &raquo;</button>
                 </li>
             </ul>
         </nav>
     </div>
-<script src="/JS/pagination.js"></script>
+    <script src="/JS/pagination.js"></script>
 </body>
-
 </html>
 
 
 
-Pagination.css
-
-
+pagination.css
 body {
-    height: 93vh;
-    width: 93vw;
+    height: 100vh;
+    width: 100vw;
     position: relative;
     display: flex;
     flex-direction: column;
+    background-color: #f4f7fc;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+#search-display {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
 }
 
 .pagination {
     position: absolute;
     display: flex;
     gap: 5px;
-    text-align: center;
-    right: 500px;
+    right: 50px;
 }
 
-.active{
-    color: blue;
+.page-link {
+    cursor: pointer;
 }
 
 #pageButtons {
     display: flex;
+    gap: 5px;
+    padding-bottom: 10px;
 }
 
 li {
     list-style: none;
 }
 
-.page-link {
-    font-size: 15px;
-    font-weight: bold;
-    background-color: white;
-    cursor: pointer;
+#table-container {
+    right: 50px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);;
 }
 
-h1 {
-    text-align: center;
+th {
+    background-color: #3498db;
 }
+
+
 table, th, td {
     border: 2px solid black;
-    border-collapse: collapse;
+    border-collapse: collapse;    
+    background-color: #fff;
 }
-.sort-icon {
-    cursor: pointer;
-    color: #666;
+
+th {
+    background-color: #2c3e50;   
+    color: white;
+    padding: 12px;
 }
 
 th:hover .sort-icon {
     color: #000;
 }
 
+td {
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 12px;
+}
+
+.active {
+    background-color: #3498db;
+    color: white;
+    scale: 1.1;
+}
+
+.sort-icon {
+    cursor: pointer;
+    color: #666;
+}
+
+/* Disabled Button */
+button:disabled {
+    cursor: not-allowed;
+}
+
+.pagination button {
+    background-color: transparent;
+    color: #2c3e50;
+    border: 2px solid #2c3e50;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.pagination button:hover {
+    background-color: #2c3e50;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.pagination button.active {
+    background-color: #3498db;
+    color: white;
+    transform: scale(1.1);
+}
 
 
-Pagination.js
 
-const totalPages = document.getElementById('value').innerText;
+pagination.js
+
+const totalPages = document.getElementById('demo').innerText;
 let currentPage = parseInt(new URLSearchParams(window.location.search).get('page')) || 1;
 const maxPageToShow = 10;
 
+
 function updatePagination() {
-    const pageButtonsContainer = document.getElementById('pageButtons');
-    pageButtonsContainer.innerHTML = '';
+    const pageButtonContainer = document.getElementById('pageButtons');
+    pageButtonContainer.innerHTML = '';
 
     let startPage = Math.max(1, currentPage - Math.floor(maxPageToShow/2));
     let endPage = Math.min(totalPages, startPage + maxPageToShow - 1);
 
-    if(endPage - startPage < maxPageToShow -1) {
+    if(endPage - startPage < maxPageToShow - 1) {
         startPage = Math.max(1, endPage - maxPageToShow +1);
     }
 
@@ -169,7 +238,7 @@ function updatePagination() {
         li.classList.add('page-item');
         li.appendChild(button);
 
-        pageButtonsContainer.appendChild(li);
+        pageButtonContainer.appendChild(li);
     }
     document.getElementById('prevBtn').disabled = currentPage === 1;
     document.getElementById('nextBtn').disabled = currentPage === totalPages;
@@ -182,19 +251,18 @@ function goToPage(page) {
 
     currentPage = page;
 
-    const url = new URL(window.location);
+    let url = new URL(window.location);
     url.searchParams.set('page', currentPage);
-    window.location.href= url.toString();
-
+    window.location.href = url.toString();
+    
     updatePagination();
-    console.log("Current Page: "+currentPage);
+    console.log('Current Page: '+page);
 }
 
-document.getElementById('prevBtn').addEventListener('click', ()=>goToPage(currentPage-1));
-document.getElementById('nextBtn').addEventListener('click', ()=>goToPage(currentPage+1));
+document.getElementById('prevBtn').addEventListener('click', () => goToPage(currentPage-1));
+document.getElementById('nextBtn').addEventListener('click', () => goToPage(currentPage+1));
 
 updatePagination();
-
 
 function sortColumn(column) {
     const url = new URL(window.location);
@@ -203,7 +271,7 @@ function sortColumn(column) {
 
     order = order === 'asc' ? 'desc' : 'asc';
 
-    url.searchParams.set('sort', column);
+    url.searchParams.set('sort',column);
     url.searchParams.set('order', order);
     url.searchParams.set('page', 1);
 
@@ -212,14 +280,25 @@ function sortColumn(column) {
 
 
 
-Pagination_Server.js
-const express = require('express');
-const mysql = require('mysql2');
-const app = express();
+function findSimilar() {
+    const first_name = document.getElementById('search-text').value;
+    console.log(first_name)
+    const url = new URL(window.location);
+
+    url.searchParams.set('search', first_name);
+
+    window.location.href = url.toString();
+}
+
+
+
+pagination_server.js
+
 const path = require('path');
+const mysql = require('mysql2');
+const express = require('express');
+const app = express()
 
-
-// MYSQL Connection
 const db = mysql.createConnection({
     host:'localhost',
     user:'root',
@@ -227,54 +306,68 @@ const db = mysql.createConnection({
     database:'practice'
 })
 
-db.connect((err) =>{
-    if(err) {
-        console.log("Error Occured: "+err.stack());
-    }
-    else {
-        console.log("Database Successfully connected: "+db.threadId);
-    }
-})
+db.connect((err)=>{
+    if(err) console.log("Error Occured: "+err.stack());
+    else console.log("Database Successfully Connected: "+db.threadId);
+});
 
-// EJS Setup
+app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', './views');
-app.use(express.static(path.join(__dirname, 'public')));
 
-
-// Pagination
 app.get('/', (req,resp) =>{
-    const page = parseInt(req.query.page) || 1
-    const sort = req.query.sort || 'student_id'
+    const page = parseInt(req.query.page) || 1;
+    const sort = req.query.sort || 'student_id';
     const order = req.query.order === 'desc' ? 'DESC' : 'ASC'
+    const query_order = req.query.order === 'desc' ? 'desc' : 'asc';
+    const field = req.query.search;
     const limit = 100;
     const offset = (page-1)*limit;
 
-    const allowedSort = ['student_id', 'student_name', 'student_city', 'student_dateOfBirth'];
-    const sortColumn = allowedSort.includes(sort) ? sort : 'student_id';
 
-    db.query(`Select * from student_detail order by ${sortColumn} ${order} limit ${offset}, ${limit}`, (err, students) =>{
+    const allowedColumn = ['student_id', 'student_name', 'student_city', 'student_dateOfBirth'];
+    const sortColumn = allowedColumn.includes(sort) ? sort : 'student_id';
+
+
+    if (!allowedColumn.includes(sort)) {
+    return resp.redirect(`/?page=1&sort=student_id&order=${query_order}`); 
+    }
+
+    if (page < 1) {
+        return resp.redirect('/?page=1');
+    }
+
+    let serach_query = '';
+    if(field !== '') {
+        serach_query = `where student_name like '%${field}%'`;
+    }
+    console.log(serach_query)
+
+    db.query(`Select * from student_detail ${serach_query} order by ${sortColumn} ${order} limit ${offset}, ${limit}`, (err,students) =>{
         if(err) {
             return resp.send(err);
         }
 
-        db.query('select count(*) as total from student_detail', (err, countResult) =>{
+        db.query(`select count(*) as total from student_detail`, (err, countResult) =>{
             if(err) {
                 return resp.send(err);
             }
-            const totalRecords = countResult[0].total;
-            const totalPages = Math.ceil(totalRecords/limit);
+
+            const totalResult = countResult[0].total;
+            const totalPages = Math.ceil(totalResult/limit);
+            
+            
+            if (page > totalPages) {
+                return resp.redirect(`/?page=${totalPages}`);
+            }
+            
             resp.render('pagination', {
                 students,
                 currentPage: page,
-                totalPages: totalPages  
+                totalPages: totalPages
             });
-        })
-    })
-})
+        });
+    });
+});
 
-app.listen(3000, (err) =>{
-    if(err) {
-        console.log(err);
-    }
-});  
+app.listen(4000);
